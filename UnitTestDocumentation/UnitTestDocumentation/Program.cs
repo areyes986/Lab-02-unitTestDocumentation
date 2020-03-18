@@ -3,7 +3,7 @@
 
 namespace UnitTestingAndDoc
 {
-    class Program
+    public class Program
     {
 
         //create atm in console app
@@ -11,7 +11,7 @@ namespace UnitTestingAndDoc
         // implement try/catch
         //do not include write or readline methods other than user interface
 
-        public static decimal Balance = 9000.00m;
+        public static decimal Balance = 8000.00m;
 
         /// <summary>
         /// Main method simply displays the menu and catches any exceptions not handled by the other methods.
@@ -74,25 +74,44 @@ namespace UnitTestingAndDoc
                     string amount = Console.ReadLine();
                     decimal userWithdrawl = Convert.ToDecimal(amount);
 
-                    //if (userWithdrawl > Balance)
-                    //{
-                    //    Console.WriteLine($"Sorry, you cannot take money that you don't have! Try again");
-                    //    return true;
-                    //}
-                    //else
-                    //{
-                    decimal newAmount = Withdrawl(userWithdrawl);
-                    Console.WriteLine($"You withdrew {userWithdrawl}. Your new balance is {newAmount}");
-                    //}
+                    // User is not allowed to withdraw more than their balance or withdraw a negative number
+                    //They are prompted that they cant if they do. If valid input, Withdrawl Method is called.
+                    if (userWithdrawl < 0)
+                    {
+                        Console.WriteLine("You cannot withdraw a negative number. Try again");
+                        return true;
+                    }
+                    else if (userWithdrawl > Balance)
+                    {
+                        Console.WriteLine($"Sorry, you cannot take money that you don't have! Try again");
+                        return true;
+                    }
+                    else
+                    {
+                        decimal newAmount = Withdrawl(userWithdrawl);
+                        Console.WriteLine($"You withdrew {userWithdrawl}. Your new balance is {newAmount}");
+                    }
                 }
+
+                // User is not allowed to deposit a negative number. If input is valid, 
+                //Deposit method will be called.
                 else if (input == 3)
                 {
                     Console.Clear();
                     Console.WriteLine("How much would you like to deposit?");
                     string amount = Console.ReadLine();
                     decimal userDeposit = Convert.ToDecimal(amount);
-                    decimal newAmount = Deposit(userDeposit);
-                    Console.WriteLine($"You deposited {userDeposit}. Your new balance is {newAmount}");
+
+                    if (userDeposit < 0)
+                    {
+                        Console.WriteLine("You cannot deposit a negative number. Try again.");
+                        return true;
+                    }
+                    else
+                    {
+                        decimal newAmount = Deposit(userDeposit);
+                        Console.WriteLine($"You deposited {userDeposit}. Your new balance is {newAmount}");
+                    }
                 }
                 else if (input == 4)
                 {
@@ -105,7 +124,7 @@ namespace UnitTestingAndDoc
                 }
 
 
-       
+
                 Console.WriteLine("Would you like another transaction? yes/no");
                 string anotherTransaction = Console.ReadLine().ToLower();
                 if (anotherTransaction == "yes" || anotherTransaction == "y")
@@ -124,25 +143,33 @@ namespace UnitTestingAndDoc
                 Console.WriteLine("Sorry! Your input only takes numerical values.");
                 return true;
             }
+        }
 
-
-            static decimal Withdrawl(decimal withdrawlAmount)
-            {               
-                Balance = Balance - withdrawlAmount;
-                if (withdrawlAmount > Balance)
+            public static decimal Withdrawl(decimal withdrawlAmount)
+            {
+                if (withdrawlAmount > Balance || withdrawlAmount < 0)
                 {
-                    throw new Exception ($"Sorry, you cannot take money that you don't have! Try again");
+                    return Balance;
                 }
+                else
+                {
+                    Balance = Balance - withdrawlAmount;
                 return Balance;
+                }
             }
 
-            static decimal Deposit(decimal depositAmount)
+            public static decimal Deposit(decimal depositAmount)
             {
+
+                if (depositAmount < 0)
+                {
+                    return Balance;
+                } 
+                else
+                {
                 Balance += depositAmount;
                 return Balance;
+                }
             }
-
-
-        }
     }
 }
