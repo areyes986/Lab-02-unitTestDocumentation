@@ -57,8 +57,8 @@ User can then start another transaction and enter "4" to exit and console will g
 ---
 
 ### Change Log  
-1.3: *Finished Readme.md* - 3/18/2020
-1.2: *Added in tests for methods* - 3/18/2020
+1.3: *Finished Readme.md* - 3/18/2020  
+1.2: *Added in tests for methods* - 3/18/2020  
 1.1: *Created the overall structure for the program.cs* - 3/17/2020 
 
 
